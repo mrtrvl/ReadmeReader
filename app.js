@@ -16,10 +16,15 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const octokit = new Octokit({
   auth: githubToken,
 });
+
+let readmesCache = null;
+let cacheTimestamp = null;
+const cacheDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
 
 const getBranches = async () => {
   const branches = await octokit.rest.repos.listBranches({
@@ -56,7 +61,7 @@ app.get('/', (req, res) => {
   res.render('index', { message: 'Hello from EJS!' });
 });
 
-async function main() {
+const getReadmes = async () => {
   const readmes = [];
   const branches = await getBranches();
   // eslint-disable-next-line no-restricted-syntax
@@ -66,11 +71,25 @@ async function main() {
     readmes.push(readme);
   }
   return readmes;
-}
+};
 
 app.get('/readmes', async (req, res) => {
-  const readmes = await main();
-  res.render('readmes', { readmes });
+  const now = Date.now();
+
+  if (readmesCache && cacheTimestamp && now - cacheTimestamp < cacheDuration) {
+    res.render('readmes', { readmes: readmesCache });
+  } else {
+    try {
+      const readmes = await getReadmes();
+      readmesCache = readmes;
+      cacheTimestamp = now;
+      res.render('readmes', { readmes });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error fetching readmes:', error);
+      res.status(500).send('An error occurred while fetching readmes.');
+    }
+  }
 });
 
 app.listen(port, () => {

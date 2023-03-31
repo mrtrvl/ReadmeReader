@@ -1,0 +1,89 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 2rem;
+  color: #333;
+}
+
+h2 {
+  background-color: #f4f4f4;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+h2:hover {
+  background-color: #e9e9e9;
+}
+
+.readme-content {
+  display: none;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  transition: all 0.3s;
+}
+
+.readme-content p {
+  margin: 0.5rem 0;
+}
+
+.readme-content ul,
+.readme-content ol {
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+}
+
+.readme-notfound {
+  display: block !important;
+  font-style: italic;
+  color: #999;
+  font-size: 0.9em;
+}
+
+.arrow {
+  display: inline-block;
+  width: 1em; /* Change this from 0.5em to 1em */
+  margin-right: 0.5em;
+}
+
+.arrow-closed::before {
+  content: '▶';
+}
+
+.arrow-open::before {
+  content: '▼';
+}
+
+.branch-notfound {
+  border: 1px solid #f00;
+}
+
+.button-container {
+  margin-bottom: 1em;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  cursor: pointer;
+  margin-right: 0.5em;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:focus {
+  outline: none;
+}
