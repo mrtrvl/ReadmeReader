@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Express EJS Example</title>
-</head>
-<body>
-  <h1><%= message %></h1>
-</body>
-</html>
+<%- include('header.ejs') %>
+  <h1>GitHub Repository Information</h1>
+  <p>Click on the links in the navigation panel to view repository information.</p>
+  <%- include('footer.ejs') %>

@@ -57,10 +57,6 @@ const getReadmeContent = async (branch) => {
   }
 };
 
-app.get('/', (req, res) => {
-  res.render('index', { message: 'Hello from EJS!' });
-});
-
 const getReadmes = async () => {
   const readmes = [];
   const branches = await getBranches();
@@ -72,6 +68,10 @@ const getReadmes = async () => {
   }
   return readmes;
 };
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
 app.get('/readmes', async (req, res) => {
   const now = Date.now();
@@ -90,6 +90,14 @@ app.get('/readmes', async (req, res) => {
       res.status(500).send('An error occurred while fetching readmes.');
     }
   }
+});
+
+app.get('/commits', async (req, res) => {
+  res.render('commits');
+});
+
+app.get('/statistics', async (req, res) => {
+  res.render('statistics');
 });
 
 app.listen(port, () => {
