@@ -1,4 +1,14 @@
 <%- include('header.ejs') %>
-<h1>Commits</h1>
-<p>Commits information will be displayed here.</p>
+<% commits.forEach((commitGroup) => { %>
+  <h2><%= commitGroup.branch %></h2>
+  <ul>
+    <% commitGroup.commits.forEach((commit) => { %>
+      <li>
+        <strong><%= commit.commit.message %></strong><br>
+        Author: <%= commit.commit.author.name %><br>
+        Date: <%= commit.commit.author.date %>
+      </li>
+    <% }); %>
+  </ul>
+<% }); %>
 <%- include('footer.ejs') %>

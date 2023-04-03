@@ -57,6 +57,21 @@ const getReadmeContent = async (branch) => {
   }
 };
 
+async function listCommits(branchName) {
+  try {
+    const { data: commits } = await octokit.rest.repos.listCommits({
+      owner: repoOwner,
+      repo: repoName,
+      sha: branchName,
+    });
+    return commits;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error fetching commits for branch ${branchName}:`, error);
+    throw error;
+  }
+}
+
 const getReadmes = async () => {
   const readmes = [];
   const branches = await getBranches();
@@ -68,6 +83,19 @@ const getReadmes = async () => {
   }
   return readmes;
 };
+
+async function getCommits() {
+  const branches = await getBranches();
+  const commitsPromises = branches.map(async (branch) => {
+    const commits = await listCommits(branch.name);
+    return {
+      branch: branch.name,
+      commits,
+    };
+  });
+
+  return Promise.all(commitsPromises);
+}
 
 app.get('/', (req, res) => {
   res.render('index');
@@ -93,7 +121,14 @@ app.get('/readmes', async (req, res) => {
 });
 
 app.get('/commits', async (req, res) => {
-  res.render('commits');
+  try {
+    const commits = await getCommits();
+    res.render('commits', { commits });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching commits:', error);
+    res.status(500).send('An error occurred while fetching commits.');
+  }
 });
 
 app.get('/statistics', async (req, res) => {

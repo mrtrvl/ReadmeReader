@@ -87,3 +87,11 @@ button:hover {
 button:focus {
   outline: none;
 }
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
