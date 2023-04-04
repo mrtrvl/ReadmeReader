@@ -1,4 +1,13 @@
 <%- include('header.ejs') %>
+
 <h1>Statistics</h1>
-<p>Statistics information will be displayed here.</p>
+
+<% statistics.forEach((stats) => { %>
+  <h2><%= stats.branch %></h2>
+  <p>Lines added and deleted:</p>
+  <ul>
+    <li>Added: <%= stats.totalAdditions %></li>
+    <li>Deleted: <%= stats.totalDeletions %></li>
+  </ul>
+<% }); %>
 <%- include('footer.ejs') %>

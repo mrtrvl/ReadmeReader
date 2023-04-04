@@ -3,7 +3,6 @@ const { Octokit } = require('@octokit/rest');
 const MarkdownIt = require('markdown-it');
 
 const md = new MarkdownIt();
-
 const {
   githubToken, repoOwner, repoName, pathToReadme,
 } = require('../config');
@@ -29,21 +28,19 @@ const getReadmeContent = async (branch) => {
       ref: branch,
     });
     const content = Buffer.from(readme.data.content, 'base64').toString('utf-8');
-    // console.log(`README content for branch ${branch}:\n${content}`);
     return {
       branch,
       content: md.render(content),
     };
   } catch (error) {
-    // console.error(`Error fetching README for branch ${branch}: ${error.message}`);
     return {
       branch,
-      content: error.message,
+      content: `Error fetching README for branch ${branch}: ${error.message}`,
     };
   }
 };
 
-async function listCommits(branchName) {
+const listCommits = async (branchName) => {
   try {
     const { data: commits } = await octokit.rest.repos.listCommits({
       owner: repoOwner,
@@ -56,7 +53,7 @@ async function listCommits(branchName) {
     console.error(`Error fetching commits for branch ${branchName}:`, error);
     throw error;
   }
-}
+};
 
 const getReadmes = async () => {
   const readmes = [];
@@ -70,7 +67,7 @@ const getReadmes = async () => {
   return readmes;
 };
 
-async function getCommits() {
+const getCommits = async () => {
   const branches = await getBranches();
   const commitsPromises = branches.map(async (branch) => {
     const commits = await listCommits(branch.name);
@@ -85,9 +82,30 @@ async function getCommits() {
   });
 
   return Promise.all(commitsPromises);
-}
+};
+
+const getStatistics = async () => {
+  const branches = await getBranches();
+  const statisticsPromises = branches.map(async (branch) => {
+    const comparison = await octokit.rest.repos.compareCommits({
+      owner: repoOwner,
+      repo: repoName,
+      base: branch.name,
+      head: 'main',
+    });
+
+    return {
+      branch: branch.name,
+      totalAdditions: comparison.data.total_commits + comparison.data.ahead_by,
+      totalDeletions: comparison.data.behind_by,
+    };
+  });
+
+  return Promise.all(statisticsPromises);
+};
 
 module.exports = {
   getCommits,
   getReadmes,
+  getStatistics,
 };

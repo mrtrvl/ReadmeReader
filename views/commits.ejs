@@ -4,7 +4,7 @@
   <ul>
     <% commitGroup.commits.forEach((commit) => { %>
       <li>
-        <strong><%= commit.commit.message %></strong><br>
+        <strong><a href="<%= commit.html_url %>" target="_blank"><%= commit.commit.message %></a></strong><br>
         Author: <%= commit.commit.author.name %><br>
         Date: <%= formatDate(commit.commit.author.date) %>
       </li>

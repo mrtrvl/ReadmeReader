@@ -1,4 +1,4 @@
-function formatDate(isoDateString) {
+const formatDate = (isoDateString) => {
   const date = new Date(isoDateString);
 
   // Convert the date to Estonian time (UTC+2 or UTC+3 depending on daylight saving)
@@ -13,7 +13,7 @@ function formatDate(isoDateString) {
   const minutes = String(estonianDate.getMinutes()).padStart(2, '0');
 
   return `${day}.${month}.${year}, ${hours}:${minutes}`;
-}
+};
 
 // eslint-disable-next-line no-extend-native
 Date.prototype.dst = function () {

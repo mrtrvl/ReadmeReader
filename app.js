@@ -5,6 +5,7 @@ const path = require('path');
 
 const commitsRoute = require('./routes/commits');
 const readmesRoute = require('./routes/readmes');
+const statisticsRoute = require('./routes/statistics');
 
 const {
   port,
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 
 app.use(commitsRoute);
 app.use(readmesRoute);
+app.use(statisticsRoute);
 
 app.get('/statistics', async (req, res) => {
   res.render('statistics');
