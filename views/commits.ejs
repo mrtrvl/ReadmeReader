@@ -6,7 +6,7 @@
       <li>
         <strong><%= commit.commit.message %></strong><br>
         Author: <%= commit.commit.author.name %><br>
-        Date: <%= commit.commit.author.date %>
+        Date: <%= formatDate(commit.commit.author.date) %>
       </li>
     <% }); %>
   </ul>
