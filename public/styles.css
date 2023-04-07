@@ -113,23 +113,29 @@ li {
 
 .navigation-menu {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #333;
-  padding: 10px 0;
+  justify-content: space-around;
+  background-color: #333333;
+  padding: 10px;
+}
+
+.navigation-menu ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation-menu li {
+  margin-right: 15px;
+}
+
+.navigation-menu li:last-child {
+  margin-right: 0;
 }
 
 .navigation-menu a {
-  color: white;
   text-decoration: none;
-  margin: 0 15px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.navigation-menu a:hover {
-  background-color: #555;
+  color: #ffffff;
 }
 
 .loading-indicator {
@@ -146,12 +152,27 @@ li {
 }
 
 .spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 4px solid rgba(255, 255, 255, 0.2);
   border-top-color: white;
   animation: spin 1s linear infinite;
+}
+
+#loadingIndicator {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the background color and opacity as needed */
 }
 
 @keyframes spin {
