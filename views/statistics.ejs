@@ -1,13 +1,11 @@
 <%- include('header.ejs') %>
 
 <h1>Statistics</h1>
-
-<% statistics.forEach((stats) => { %>
-  <h2><%= stats.branch %></h2>
-  <p>Lines added and deleted:</p>
-  <ul>
-    <li>Added: <%= stats.totalAdditions %></li>
-    <li>Deleted: <%= stats.totalDeletions %></li>
-  </ul>
-<% }); %>
+<div>
+  <h2>Commit Frequency</h2>
+  <canvas id="commitFrequencyChart"></canvas>
+</div>
+<script type="application/json" id="commitFrequencyChartData">
+  <%- JSON.stringify(commitGroups) %>
+</script>
 <%- include('footer.ejs') %>

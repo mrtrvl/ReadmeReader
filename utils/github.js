@@ -84,28 +84,7 @@ const getCommits = async () => {
   return Promise.all(commitsPromises);
 };
 
-const getStatistics = async () => {
-  const branches = await getBranches();
-  const statisticsPromises = branches.map(async (branch) => {
-    const comparison = await octokit.rest.repos.compareCommits({
-      owner: repoOwner,
-      repo: repoName,
-      base: branch.name,
-      head: 'main',
-    });
-
-    return {
-      branch: branch.name,
-      totalAdditions: comparison.data.total_commits + comparison.data.ahead_by,
-      totalDeletions: comparison.data.behind_by,
-    };
-  });
-
-  return Promise.all(statisticsPromises);
-};
-
 module.exports = {
   getCommits,
   getReadmes,
-  getStatistics,
 };
