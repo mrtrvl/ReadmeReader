@@ -4,7 +4,7 @@ const MarkdownIt = require('markdown-it');
 
 const md = new MarkdownIt();
 const {
-  githubToken, repoOwner, repoName, pathToReadme,
+  githubToken, repoOwner, repoName, pathToReadme, excludedAuthors, excludedBranches,
 } = require('../config');
 
 const octokit = new Octokit({
@@ -16,7 +16,10 @@ const getBranches = async () => {
     owner: repoOwner,
     repo: repoName,
   });
-  return branches.data;
+  const filteredBranches = branches.data.filter(
+    (branch) => !excludedBranches.includes(branch.name),
+  );
+  return filteredBranches;
 };
 
 const getReadmeContent = async (branch) => {
@@ -71,7 +74,9 @@ const getCommits = async () => {
   const branches = await getBranches();
   const commitsPromises = branches.map(async (branch) => {
     const commits = await listCommits(branch.name);
-    const filteredCommits = commits.filter((commit) => (commit.commit.author.name !== 'mrtrvl') && commit.commit.author.name !== 'Martti Raavel');
+    const filteredCommits = commits.filter(
+      (commit) => !excludedAuthors.includes(commit.commit.author.name),
+    );
     const sortedCommits = filteredCommits.sort(
       (a, b) => new Date(b.commit.author.date) - new Date(a.commit.author.date),
     );

@@ -8,7 +8,7 @@ router.get('/commits', async (req, res) => {
   try {
     const commits = await getCommits();
     // eslint-disable-next-line max-len
-    const averageCommitCount = commits.reduce((total, commitGroup) => total + commitGroup.commits.length, 0) / commits.length;
+    const averageCommitCount = Math.round(commits.reduce((total, commitGroup) => total + commitGroup.commits.length, 0) / commits.length);
     res.render('commits', { commits, formatDate, averageCommitCount });
   } catch (error) {
     // eslint-disable-next-line no-console
