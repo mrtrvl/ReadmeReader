@@ -163,3 +163,18 @@ if (commitGroupsElement) {
     setBadgeStyle(badge, commitCount);
   });
 }
+
+const navLinks = document.querySelectorAll('[data-loading]');
+const loadingIndicator = document.getElementById('loadingIndicator');
+
+navLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    const targetUrl = event.target.href;
+
+    if (targetUrl) {
+      loadingIndicator.style.display = 'block';
+      window.location.href = targetUrl;
+    }
+  });
+});
