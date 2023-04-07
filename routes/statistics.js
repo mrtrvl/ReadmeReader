@@ -9,7 +9,7 @@ router.get('/statistics', async (req, res) => {
     const commitGroups = await getCommits();
     res.render('statistics', { commitGroups, formatDate });
   } catch (error) {
-    console.error('Error fetching statistics:', error);
+    // console.error('Error fetching statistics:', error);
     res.status(500).send('An error occurred while fetching statistics.');
   }
 });

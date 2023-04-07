@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
-function toggleContent(element) {
+const toggleContent = (element) => {
   const arrow = element.querySelector('.arrow');
   const content = element.nextElementSibling;
   content.style.display = content.style.display === 'none' ? 'block' : 'none';
   arrow.classList.toggle('arrow-closed');
   arrow.classList.toggle('arrow-open');
-}
+};
 
-function revealAll() {
+const revealAll = () => {
   const headers = document.querySelectorAll('h2');
   headers.forEach((header) => {
     const arrow = header.querySelector('.arrow');
@@ -20,9 +20,9 @@ function revealAll() {
       arrow.classList.add('arrow-open');
     }
   });
-}
+};
 
-function hideAll() {
+const hideAll = () => {
   const headers = document.querySelectorAll('h2');
   headers.forEach((header) => {
     const arrow = header.querySelector('.arrow');
@@ -34,18 +34,18 @@ function hideAll() {
       arrow.classList.add('arrow-closed');
     }
   });
-}
+};
 
-function getRandomColor() {
+const getRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let color = '#';
   for (let i = 0; i < 6; i += 1) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-}
+};
 
-function generateCommitFrequencyChartData(commitGroups) {
+const generateCommitFrequencyChartData = (commitGroups) => {
   const dates = {};
 
   commitGroups.forEach((commitGroup) => {
@@ -78,7 +78,7 @@ function generateCommitFrequencyChartData(commitGroups) {
   });
 
   return { labels, dataSets };
-}
+};
 
 if (document.getElementById('commitFrequencyChart')) {
   const commitsJson = document.getElementById('commitFrequencyChartData').textContent;
@@ -122,7 +122,7 @@ document.getElementById('hideAllCommits').addEventListener('click', () => {
   });
 });
 
-function getCommitBadgeColor(commitCount, averageCommitCount) {
+const getCommitBadgeColor = (commitCount, averageCommitCount) => {
   const threshold = averageCommitCount * 0.1; // 10% threshold
   if (commitCount > averageCommitCount + threshold) {
     return 'green';
@@ -130,9 +130,9 @@ function getCommitBadgeColor(commitCount, averageCommitCount) {
     return 'yellow';
   }
   return 'lightskyblue';
-}
+};
 
-function setBadgeStyle(badge, commitCount) {
+const setBadgeStyle = (badge, commitCount) => {
   const digits = commitCount.toString().length;
   const baseSize = 24;
 
@@ -152,7 +152,7 @@ function setBadgeStyle(badge, commitCount) {
     badge.style.lineHeight = `${baseSize}px`;
     badge.style.fontSize = '10px';
   }
-}
+};
 
 const commitGroupsElement = document.getElementById('commitGroups');
 if (commitGroupsElement) {
