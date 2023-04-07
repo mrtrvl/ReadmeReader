@@ -31,9 +31,11 @@ const getReadmeContent = async (branch) => {
       ref: branch,
     });
     const content = Buffer.from(readme.data.content, 'base64').toString('utf-8');
+    const rowCount = content.split('\n').length;
     return {
       branch,
       content: md.render(content),
+      rowCount,
     };
   } catch (error) {
     return {
