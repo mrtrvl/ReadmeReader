@@ -1,11 +1,12 @@
 <%- include('header.ejs') %>
+<h1>Readmes</h1>
   <div class="button-container">
     <button onclick="revealAll()">Reveal All</button>
     <button onclick="hideAll()">Hide All</button>
   </div>
 
   <% readmes.forEach((readme) => { %>
-    <h2 onclick="toggleReadmeContent(this)" class="<%= (readme.content.trim() === 'Not Found' || readme.content.trim() === '') ? 'branch-notfound' : '' %>">
+    <h2 onclick="toggleContent(this)" class="<%= (readme.content.trim() === 'Not Found' || readme.content.trim() === '') ? 'branch-notfound' : '' %>">
       <span class="arrow arrow-closed"></span>
       <%= readme.branch %>
     </h2>

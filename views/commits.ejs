@@ -1,14 +1,29 @@
 <%- include('header.ejs') %>
-<% commits.forEach((commitGroup) => { %>
-  <h2><%= commitGroup.branch %></h2>
-  <ul>
-    <% commitGroup.commits.forEach((commit) => { %>
-      <li>
-        <strong><a href="<%= commit.html_url %>" target="_blank"><%= commit.commit.message %></a></strong><br>
-        Author: <%= commit.commit.author.name %><br>
-        Date: <%= formatDate(commit.commit.author.date) %>
-      </li>
-    <% }); %>
-  </ul>
-<% }); %>
+<h1>Commits</h1>
+<h2>Average commit count: <%= averageCommitCount %></h2>
+<div>
+  <button id="revealAllCommits">Reveal All</button>
+  <button id="hideAllCommits">Hide All</button>
+</div>
+<div id="commitGroups" data-average-commit-count="<%= averageCommitCount %>">
+  <% commits.forEach((commitGroup) => { %>
+    <div onclick="toggleContent(this)" class="commit-group">
+      <h2 class="commit-group-header">
+        <span class="arrow arrow-closed"></span>
+        <%= commitGroup.branch %> <span class="commit-count" data-commit-count="<%= commitGroup.commits.length %>"><%= commitGroup.commits.length %></span>
+      </h2>
+      <div class="commit-group-content" style="display: none;">
+        <ul>
+          <% commitGroup.commits.forEach((commit) => { %>
+            <li>
+              <strong><a href="<%= commit.html_url %>" target="_blank"><%= commit.commit.message %></a></strong><br>
+              Author: <%= commit.commit.author.name %><br>
+              Date: <%= formatDate(commit.commit.author.date) %>
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+  <% }) %>
+</div>
 <%- include('footer.ejs') %>

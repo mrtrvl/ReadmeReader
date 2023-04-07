@@ -15,7 +15,7 @@ const formatDate = (isoDateString) => {
   return `${day}.${month}.${year}, ${hours}:${minutes}`;
 };
 
-// eslint-disable-next-line no-extend-native
+// eslint-disable-next-line no-extend-native, func-names
 Date.prototype.dst = function () {
   const year = this.getFullYear();
   const start = new Date(year, 2, 31);
