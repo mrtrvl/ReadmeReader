@@ -25,10 +25,6 @@ app.use(commitsRoute);
 app.use(readmesRoute);
 app.use(statisticsRoute);
 
-app.get('/statistics', async (req, res) => {
-  res.render('statistics');
-});
-
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`App is running on port: ${port}`);
