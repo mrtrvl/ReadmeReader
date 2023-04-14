@@ -91,7 +91,22 @@ const getCommits = async () => {
   return Promise.all(commitsPromises);
 };
 
+const getIssues = async () => {
+  try {
+    const { data: issues } = await octokit.rest.issues.listForRepo({
+      owner: repoOwner,
+      repo: repoName,
+    });
+    return issues;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error fetching issues: ${error}`);
+    throw error;
+  }
+};
+
 module.exports = {
   getCommits,
   getReadmes,
+  getIssues,
 };

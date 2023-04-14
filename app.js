@@ -6,6 +6,7 @@ const path = require('path');
 const commitsRoute = require('./routes/commits');
 const readmesRoute = require('./routes/readmes');
 const statisticsRoute = require('./routes/statistics');
+const issuesRoute = require('./routes/issues');
 
 const {
   port,
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 app.use(commitsRoute);
 app.use(readmesRoute);
 app.use(statisticsRoute);
+app.use(issuesRoute);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
