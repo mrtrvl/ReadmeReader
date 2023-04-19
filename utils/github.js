@@ -92,17 +92,25 @@ const getCommits = async () => {
 };
 
 const getIssues = async () => {
-  try {
-    const { data: issues } = await octokit.rest.issues.listForRepo({
-      owner: repoOwner,
-      repo: repoName,
+  const issues = await octokit.rest.issues.listForRepo({
+    owner: repoOwner,
+    repo: repoName,
+    state: 'open',
+  });
+
+  const issuesByAssignee = issues.data.reduce((acc, issue) => {
+    const assignee = issue.assignee ? issue.assignee.login : 'Unassigned';
+    if (!acc[assignee]) {
+      acc[assignee] = [];
+    }
+    acc[assignee].push({
+      ...issue,
+      bodyHtml: md.render(issue.body || ''),
     });
-    return issues;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(`Error fetching issues: ${error}`);
-    throw error;
-  }
+    return acc;
+  }, {});
+
+  return issuesByAssignee;
 };
 
 module.exports = {

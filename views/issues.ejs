@@ -1,9 +1,24 @@
 <%- include('header.ejs') %>
-<h1>Issues</h1>
-<div>
-  <button id="revealAllIssues">Reveal All</button>
-  <button id="hideAllIssues">Hide All</button>
-</div>
 
+<h1>Issues</h1>
+
+<% Object.entries(issuesByAssignee).forEach(([assignee, issues]) => { %>
+  <h2>
+    <% if (assignee !== 'Unassigned') { %>
+      <img src="<%= issues[0].assignee.avatar_url %>" alt="<%= assignee %>" style="width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; margin-right: 8px;">
+    <% } %>
+    <%= assignee %>
+  </h2>
+  <ul>
+    <% issues.forEach((issue) => { %>
+      <li>
+        <strong><a href="<%= issue.html_url %>" target="_blank"><%= issue.title %></a></strong><br>
+        <strong>Created at: <%= formatDate(issue.created_at) %></strong>
+        <div><%- issue.bodyHtml %></div>
+        
+      </li>
+    <% }); %>
+  </ul>
+<% }); %>
 
 <%- include('footer.ejs') %>
