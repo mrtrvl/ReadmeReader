@@ -6,7 +6,7 @@
   </div>
 
   <% readmes.forEach((readme) => { %>
-    <h2 onclick="toggleContent(this)" class="<%= (readme.content.trim() === 'Not Found' || readme.content.trim() === '') ? 'branch-notfound' : '' %>">
+    <h2 onclick="toggleContent(this)" class="<%= (readme.content.trim() === 'Not Found' || readme.content.trim() === '' || readme.content.startsWith('Error fetching') || readme.rowCount < 2) ? 'branch-notfound' : '' %>">
       <span class="arrow arrow-closed"></span>
       <%= readme.branch %> - number of rows: <%= readme.rowCount %>
     </h2>
